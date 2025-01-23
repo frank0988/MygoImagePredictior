@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Messenger 文字推薦圖片",
+  "version": "1.0",
+  "description": "根據輸入的文字推薦圖片",
+  "permissions": ["activeTab", "storage", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": ["https://mygoapi.miyago9267.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.messenger.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  }
+}
