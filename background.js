@@ -39,7 +39,7 @@ async function fetchImages(query, tabId) {
             
         };
 
-        // 6. 先檢查字典，是否有匹配的圖片
+        // 6. 先檢查字典
         for (let keyword in keywordDictionary) {
             if (query.includes(keyword)) {
                 console.log("使用字典匹配:", keywordDictionary[keyword]);
@@ -52,13 +52,24 @@ async function fetchImages(query, tabId) {
         }
 
         // 7. 使用相似度計算來找最佳匹配圖片
+        /*
         function similarity(s1, s2) {
             let matches = 0;
             for (let char of s1) {
                 if (s2.includes(char)) matches++;
             }
             return matches / Math.max(s1.length, s2.length);
-        }
+        }*/
+        function similarity(s1, s2) {
+                let set1 = new Set(s1);
+                let set2 = new Set(s2);
+                
+                let intersection = new Set([...set1].filter(char => set2.has(char)));
+                let union = new Set([...set1, ...set2]);
+                
+                return intersection.size / union.size;
+            }
+            
 
         let bestMatch = images.reduce((best, img) => {
             let sim = similarity(query, img.alt);
